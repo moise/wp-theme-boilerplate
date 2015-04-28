@@ -13,7 +13,7 @@ if ( ! defined( 'THEMEURI' ) )
 /**
  * Class to init the WordPress theme
  *
- * @version: 0.1.0
+ * @version: 0.1.1
  *
  * @package: Theme
  * @author : Moise Scalzo <moise.scalzo@gmail.com>
