@@ -10,10 +10,12 @@ if ( ! defined( 'THEMEURI' ) )
 	define( 'THEMEURI', get_template_directory_uri( __FILE__ ) );
 
 
+//require_once( THEMEPATH . '/theme-abstract.php' );
+
 /**
  * Class to init the WordPress theme
  *
- * @version: 0.1.1
+ * @version: 0.1.2
  *
  * @package: Theme
  * @author : Moise Scalzo <moise.scalzo@gmail.com>
@@ -148,6 +150,7 @@ class Theme {
 	{
 		// Required by the class
 		require_once $this->path . '/includes/nav.class.php';
+		require_once $this->path . '/includes/breadcrumb.class.php';
 
 		//All the custom files
 		if ( isset( $this->conf['dependencies'] ) ) {
@@ -244,7 +247,6 @@ class Theme {
 	 * @since : 0.1.0
 	 */
 
-
 	public function enqueue_scripts()
 	{
 		foreach ( $this->scripts as $name => $args ) {
@@ -266,6 +268,22 @@ class Theme {
 				'remove_file'  => __( 'Remove current file', 'cuztom' )
 			) );
 		}*/
+
+	public function menu( $name )
+	{
+		$menu = new Theme_Menu( $this->conf, $name );
+
+		return $menu;
+	}
+
+
+	public function breadcrumb( $templates = array(), $options = array() )
+	{
+		$breadcrumb = new Theme_Breadcrumb( $templates, $options );
+
+		return $breadcrumb;
+	}
+
 
 	/**
 	 * Custom query.

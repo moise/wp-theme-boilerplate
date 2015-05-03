@@ -9,7 +9,7 @@
  * @subpackage: Theme/includes
  * @author    : Moise Scalzo <moise.scalzo@gmail.com>
  */
-class Theme_Menu extends Theme {
+class Theme_Menu {
 
 
 	/**
