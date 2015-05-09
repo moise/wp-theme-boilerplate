@@ -124,6 +124,7 @@ class Theme {
 			self::$instance = new Theme( $conf );
 			self::$instance->load_dependencies();
 			self::$instance->add_hooks();
+			self::$instance->theme_support();
 		}
 
 		return self::$instance;
@@ -179,6 +180,21 @@ class Theme {
 		//Scripts
 		add_action( 'init', array( &$this, 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+	}
+
+
+	/**
+	 * Add theme support
+	 *
+	 * @author: Moise Scalzo
+	 * @since : 0.1.2
+	 */
+	public function theme_support()
+	{
+		$textdomain = ( isset( $this->conf['texdomain'] ) ? $this->conf['texdomain']['text'] : 'ms' );
+		$path       = ( isset( $this->conf['texdomain'] ) ? $this->conf['texdomain']['path'] : get_template_directory() . '/language' );
+
+		load_theme_textdomain( $textdomain, $path );
 	}
 
 
@@ -276,6 +292,14 @@ class Theme {
 		return $menu;
 	}
 
+
+	/**
+	 * Add breadcrumb
+	 *
+	 * @param array $templates
+	 * @param array $options
+	 * @return Theme_Breadcrumb
+	 */
 
 	public function breadcrumb( $templates = array(), $options = array() )
 	{
