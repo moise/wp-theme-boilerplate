@@ -3,7 +3,7 @@ $conf = array(
 	'version'    => '0.1.0',
 	'styles'     => array(
 		'base'         => array(
-			'url'          => LIBRARY . '/css/base.min.css',
+			'url'          => DIST . '/css/base.min.css',
 			'dependencies' => array(),
 			'version'      => '1.0',
 			'admin'        => false
@@ -23,21 +23,28 @@ $conf = array(
 	),
 	'scripts'    => array(
 		'bootstrap' => array(
-			'url'          => LIBRARY . '/js/bootstrap.min.js',
+			'url'          => DIST . '/js/libs/bootstrap.min.js',
+			'dependencies' => array( 'jquery' ),
+			'version'      => '3.3.4',
+			'footer'       => true
+		),
+		'isotope' => array(
+			'url'          => DIST . '/js/libs/isotope.min.js',
 			'dependencies' => array( 'jquery' ),
 			'version'      => '3.3.4',
 			'footer'       => true
 		),
 		'main'      => array(
-			'url'          => LIBRARY . '/js/main.js',
-			'dependencies' => array( 'jquery' ),
+			'url'          => DIST . '/js/all.min.js',
+			'dependencies' => array( 'jquery', 'masonry' ),
 			'version'      => '0.1.0',
 			'footer'       => true
 		)
 	),
 	/**
 	 * Textdomain support
+	 *
 	 * @args: text => textdomain name (ex. fs), path => path to de languages folder.
 	 */
-	'textdomain' => array( 'text' => 'fs' )
+	'textdomain' => array( 'text' => 'fs', 'path' => THEMEPATH . '/languages' ),
 );

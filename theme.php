@@ -180,6 +180,8 @@ class Theme {
 		//Scripts
 		add_action( 'init', array( &$this, 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+
+		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
 	}
 
 
@@ -248,7 +250,6 @@ class Theme {
 		$this->scripts = $this->conf['scripts'];
 
 		if ( ! empty( $this->scripts ) ) {
-
 			foreach ( $this->scripts as $name => $args ) {
 				wp_register_script( $name, $args['url'], $args['dependencies'], $args['version'], $args['footer'] );
 			}
@@ -266,7 +267,17 @@ class Theme {
 	public function enqueue_scripts()
 	{
 		foreach ( $this->scripts as $name => $args ) {
-			wp_enqueue_script( $name );
+
+			switch ( $args['hook'] ) {
+				case 'admin':
+					//if ( is_admin() )
+					wp_enqueue_script( $name );
+					break;
+				default:
+					if ( ! is_admin() )
+						wp_enqueue_script( $name );
+			}
+
 		}
 
 		//$this->localize_scripts();
