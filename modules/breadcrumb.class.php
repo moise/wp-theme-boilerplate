@@ -1,5 +1,7 @@
 <?php
 
+namespace Kenzol\Modules;
+
 /**
  * Class to add a custom breadcrumb to WordPress Theme
  *

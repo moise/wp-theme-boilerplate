@@ -104,9 +104,8 @@ class Theme {
 	 * @since : 0.1.0
 	 */
 
-	private function __construct( $conf )
+	private function __construct()
 	{
-		$this->conf = $conf;
 		$this->path = THEMEPATH;
 	}
 
@@ -120,10 +119,11 @@ class Theme {
 	 * @return: null|\Theme
 	 */
 
-	public static function get_instance( $conf )
+	public static function get_instance()
 	{
+
 		if ( self::$instance == null ) {
-			self::$instance = new Theme( $conf );
+			self::$instance = new Theme();
 			self::$instance->load_dependencies();
 			self::$instance->add_hooks();
 			self::$instance->theme_support();
@@ -151,9 +151,14 @@ class Theme {
 
 	private function load_dependencies()
 	{
+
+		$conf = [ ];
+
 		// Required by the class
-		require_once $this->path . '/includes/nav.class.php';
-		require_once $this->path . '/includes/breadcrumb.class.php';
+		require_once THEMEPATH . '/theme-config.php';
+		$this->conf = $conf;
+		require_once $this->path . '/modules/nav.class.php';
+		require_once $this->path . '/modules/breadcrumb.class.php';
 
 		//All the custom files
 		if ( isset( $this->conf['dependencies'] ) ) {
@@ -300,7 +305,8 @@ class Theme {
 
 	public function menu( $name )
 	{
-		$menu = new Theme_Menu( $this->conf, $name );
+
+		$menu = new Modules\Theme_Menu( $this->conf, $name );
 
 		return $menu;
 	}
@@ -311,14 +317,26 @@ class Theme {
 	 *
 	 * @param array $templates
 	 * @param array $options
-	 * @return Theme_Breadcrumb
+	 * @return Modules\Theme_Breadcrumb
 	 */
+
 
 	public function breadcrumb( $templates = array(), $options = array() )
 	{
-		$breadcrumb = new Theme_Breadcrumb( $templates, $options );
+		$breadcrumb = new Modules\Theme_Breadcrumb( $templates, $options );
 
 		return $breadcrumb;
+	}
+
+
+	/**
+	 * Clean way to get the current queried object.
+	 *
+	 * @return object
+	 */
+	public function object()
+	{
+		return get_queried_object();
 	}
 
 
@@ -334,10 +352,11 @@ class Theme {
 	public function query( $query_name, $args )
 	{
 		if ( empty( $this->cache[ $query_name ] ) ) {
-			$this->cache[ $query_name ] = new WP_Query( $args );
+			$this->cache[ $query_name ] = new \WP_Query( $args );
+			set_transient( $query_name, $this->cache[ $query_name ], 2 * HOUR_IN_SECONDS );
 		}
 
-		return $this->cache[ $query_name ];
+		return get_transient( $query_name );
 	}
 
 }

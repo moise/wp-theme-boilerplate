@@ -1,5 +1,7 @@
 <?php
 
+namespace Kenzol\Modules;
+
 /**
  * Class to init the WordPress Menus
  *
