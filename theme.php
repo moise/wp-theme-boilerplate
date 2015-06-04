@@ -1,5 +1,7 @@
 <?php
 
+namespace Kenzol;
+
 if ( ! defined( 'ABSPATH' ) )
 	exit;
 
