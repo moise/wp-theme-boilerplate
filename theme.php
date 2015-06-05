@@ -341,6 +341,19 @@ class Theme {
 
 
 	/**
+	 * Get sidebar.
+	 *
+	 * @return object
+	 */
+	public function sidebar( $name )
+	{
+		if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( $name ) ) :
+			echo sprintf( __( 'La sidebar %s non esiste' ), $name );
+		endif;
+	}
+
+
+	/**
 	 * Custom query.
 	 * The query is cached in the $cache variable as array.
 	 *
