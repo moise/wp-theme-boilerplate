@@ -126,6 +126,7 @@ class Theme {
 			self::$instance = new Theme();
 			self::$instance->load_dependencies();
 			self::$instance->add_hooks();
+			self::$instance->sidebars();
 			self::$instance->theme_support();
 		}
 
@@ -159,6 +160,7 @@ class Theme {
 		$this->conf = $conf;
 		require_once $this->path . '/modules/nav.class.php';
 		require_once $this->path . '/modules/breadcrumb.class.php';
+		require_once $this->path . '/modules/sidebar.class.php';
 
 		//All the custom files
 		if ( isset( $this->conf['dependencies'] ) ) {
@@ -274,17 +276,8 @@ class Theme {
 	public function enqueue_scripts()
 	{
 		foreach ( $this->scripts as $name => $args ) {
-
-			switch ( $args['hook'] ) {
-				case 'admin':
-					//if ( is_admin() )
-					wp_enqueue_script( $name );
-					break;
-				default:
-					if ( ! is_admin() )
-						wp_enqueue_script( $name );
-			}
-
+			if ( ! is_admin() )
+				wp_enqueue_script( $name );
 		}
 
 		//$this->localize_scripts();
@@ -320,7 +313,6 @@ class Theme {
 	 * @return Modules\Theme_Breadcrumb
 	 */
 
-
 	public function breadcrumb( $templates = array(), $options = array() )
 	{
 		$breadcrumb = new Modules\Theme_Breadcrumb( $templates, $options );
@@ -330,13 +322,24 @@ class Theme {
 
 
 	/**
-	 * Clean way to get the current queried object.
+	 * Add sidebars
 	 *
-	 * @return object
+	 * @param array $templates
+	 * @param array $options
+	 * @return Modules\Sidebar
 	 */
-	public function object()
+
+	public function sidebars()
 	{
-		return get_queried_object();
+		$sidebars = [];
+
+		foreach ( $this->conf['sidebars'] as $args ) :
+
+			$sidebars[] = new Modules\Sidebar( $args );
+
+		endforeach;
+
+		return $sidebars;
 	}
 
 
@@ -345,11 +348,23 @@ class Theme {
 	 *
 	 * @return object
 	 */
-	public function sidebar( $name )
+	public function _sidebar( $name )
 	{
 		if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( $name ) ) :
 			echo sprintf( __( 'La sidebar %s non esiste' ), $name );
 		endif;
+	}
+
+
+	/**
+	 * Clean way to get the current queried object.
+	 *
+	 * @return object
+	 */
+
+	public function object()
+	{
+		return get_queried_object();
 	}
 
 
