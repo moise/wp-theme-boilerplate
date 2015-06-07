@@ -276,8 +276,9 @@ class Theme {
 	public function enqueue_scripts()
 	{
 		foreach ( $this->scripts as $name => $args ) {
-			if ( ! is_admin() )
-				wp_enqueue_script( $name );
+			if ( ! isset( $args['enqueue'] ) || $args['enqueue'] != false )
+				if ( ! is_admin() )
+					wp_enqueue_script( $name );
 		}
 
 		//$this->localize_scripts();
@@ -331,7 +332,7 @@ class Theme {
 
 	public function sidebars()
 	{
-		$sidebars = [];
+		$sidebars = [ ];
 
 		foreach ( $this->conf['sidebars'] as $args ) :
 
