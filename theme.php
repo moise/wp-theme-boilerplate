@@ -355,6 +355,24 @@ class Theme {
 			echo sprintf( __( 'La sidebar %s non esiste' ), $name );
 		endif;
 	}
+	
+	
+	/**
+	 * Make a dynamic CSS.
+	 * Args are: $source_path; $css_path; $dynamic_file_name; $css_file_name;
+	 * Data are: all the data need to be passed to the dynamic file.
+	 * 
+	 * @param $args
+	 * @param $data
+	 * @return Modules\DynamicCSS
+	 */
+
+	public function dynamic_css( $args, $data )
+	{
+		$file = new Modules\DynamicCSS( $args, $data );
+		return $file;
+	}
+
 
 
 	/**
