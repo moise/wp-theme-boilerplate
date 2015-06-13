@@ -65,7 +65,7 @@ class Theme_Breadcrumb {
 				'link'     => '<a href="%s">%s</a>',
 				'current'  => '<span class="c">%s</span>',
 				'standard' => '<span class="s">%s</span>',
-				'before'   => '<nav>',
+				'before'   => '<nav class="breadcrumb">',
 				'after'    => '</nav>'
 			)
 		);
