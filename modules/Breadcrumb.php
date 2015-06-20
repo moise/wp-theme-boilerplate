@@ -191,7 +191,7 @@ class Breadcrumb {
 			if ( is_home() && ! $this->options['show_pagenum'] )
 				$this->breadcrumb['blog'] = $this->template( get_the_title( $this->options['page_for_posts'] ), 'current' );
 
-			if ( ( 'post' == $post_type && ! is_search() && ! is_home() ) || ( 'post' == $post_type && $this->options['show_pagenum'] ) )
+			if ( ( 'post' == $post_type && ! is_search() && ! is_home() && ! empty( $this->options['page_for_posts'] ) ) || ( 'post' == $post_type && $this->options['show_pagenum'] ) )
 				$this->breadcrumb['blog'] = $this->template( array(
 					'link'  => get_permalink( $this->options['page_for_posts'] ),
 					'title' => get_the_title( $this->options['page_for_posts'] )
