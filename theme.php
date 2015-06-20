@@ -1,6 +1,10 @@
 <?php
 
 namespace Kenzol;
+use Kenzol\Modules\Breadcrumb;
+use Kenzol\Modules\DynamicCSS;
+use Kenzol\Modules\Menu;
+use Kenzol\Modules\Sidebar;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit;
@@ -158,9 +162,6 @@ class Theme {
 		// Required by the class
 		require_once THEMEPATH . '/theme-config.php';
 		$this->conf = $conf;
-		require_once $this->path . '/modules/nav.class.php';
-		require_once $this->path . '/modules/breadcrumb.class.php';
-		require_once $this->path . '/modules/sidebar.class.php';
 
 		//All the custom files
 		if ( isset( $this->conf['dependencies'] ) ) {
@@ -300,7 +301,7 @@ class Theme {
 	public function menu( $name )
 	{
 
-		$menu = new Modules\Theme_Menu( $this->conf, $name );
+		$menu = new Menu( $this->conf, $name );
 
 		return $menu;
 	}
@@ -316,7 +317,7 @@ class Theme {
 
 	public function breadcrumb( $templates = array(), $options = array() )
 	{
-		$breadcrumb = new Modules\Theme_Breadcrumb( $templates, $options );
+		$breadcrumb = new Breadcrumb( $templates, $options );
 
 		return $breadcrumb;
 	}
@@ -336,7 +337,7 @@ class Theme {
 
 		foreach ( $this->conf['sidebars'] as $args ) :
 
-			$sidebars[] = new Modules\Sidebar( $args );
+			$sidebars[] = new Sidebar( $args );
 
 		endforeach;
 
@@ -352,16 +353,16 @@ class Theme {
 	public function _sidebar( $name )
 	{
 		if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( $name ) ) :
-			echo sprintf( __( 'La sidebar %s non esiste' ), $name );
+			//echo sprintf( __( 'La sidebar %s non esiste' ), $name );
 		endif;
 	}
-	
-	
+
+
 	/**
 	 * Make a dynamic CSS.
 	 * Args are: $source_path; $css_path; $dynamic_file_name; $css_file_name;
 	 * Data are: all the data need to be passed to the dynamic file.
-	 * 
+	 *
 	 * @param $args
 	 * @param $data
 	 * @return Modules\DynamicCSS
@@ -369,10 +370,10 @@ class Theme {
 
 	public function dynamic_css( $args, $data )
 	{
-		$file = new Modules\DynamicCSS( $args, $data );
+		$file = new DynamicCSS( $args, $data );
+
 		return $file;
 	}
-
 
 
 	/**
@@ -396,11 +397,13 @@ class Theme {
 	 * @return: mixed         Return array
 	 */
 
-	public function query( $query_name, $args )
+	public function query( $query_name, $args, $force = false )
 	{
-		if ( empty( $this->cache[ $query_name ] ) ) {
+		if ( empty( $this->cache[ $query_name ] ) && ! $force ) {
 			$this->cache[ $query_name ] = new \WP_Query( $args );
 			set_transient( $query_name, $this->cache[ $query_name ], 2 * HOUR_IN_SECONDS );
+		} else {
+			return $this->cache[ $query_name ] = new \WP_Query( $args );
 		}
 
 		return get_transient( $query_name );

@@ -63,7 +63,7 @@ class DynamicCSS {
 
 
 	/**
-	 * Genero il CSS dinamico
+	 * Generate dynamic css file.
 	 *
 	 * @return bool
 	 */

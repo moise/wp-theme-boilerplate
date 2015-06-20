@@ -11,7 +11,7 @@ namespace Kenzol\Modules;
  * @subpackage: Theme/includes
  * @author    : Moise Scalzo <moise.scalzo@gmail.com>
  */
-class Theme_Menu {
+class Menu {
 
 
 	/**
