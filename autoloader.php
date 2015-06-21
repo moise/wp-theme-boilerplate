@@ -8,7 +8,7 @@ class Autoloader {
 		$filename = str_replace( "\\", "/", $className ) . ".php";
 
 		if ( file_exists( BASEPATH . '/' . $filename ) ) {
-			require_once(  BASEPATH . '/' . $filename );
+			require_once( BASEPATH . '/' . $filename );
 			if ( class_exists( $className ) ) {
 				return true;
 			}
