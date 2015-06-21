@@ -313,7 +313,7 @@ class Theme {
 
 	public function breadcrumb( $templates = array(), $options = array(), $strings = array(), $autorun = true )
 	{
-		$breadcrumb = new Breadcrumb( $templates = array(), $options = array(), $strings = array(), $autorun = true );
+		$breadcrumb = new Breadcrumb( $templates, $options, $strings, $autorun );
 
 		return $breadcrumb;
 	}
