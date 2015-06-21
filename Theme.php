@@ -235,7 +235,9 @@ class Theme {
 		if ( ! empty( $this->styles ) ) {
 
 			foreach ( $this->styles as $name => $args ) {
-				wp_enqueue_style( $name );
+				if ( ! isset( $args['enqueue'] ) || $args['enqueue'] != false )
+					if ( ! is_admin() )
+						wp_enqueue_style( $name );
 			}
 		}
 	}
