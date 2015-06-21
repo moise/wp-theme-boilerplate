@@ -1,5 +1,5 @@
 # Kenzol
-Kenzol is a WordPress theme boilerplate that includes some useful modules such as a Breadcrumb class and a dynamic css generator class
+Kenzol is a WordPress theme boilerplate that includes some useful modules such as a Breadcrumb class and a Dynamic CSS generator class
 
 To start just include the Autoloader.php file in your function.php file.
 
