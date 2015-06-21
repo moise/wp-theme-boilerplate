@@ -16,8 +16,6 @@ if ( ! defined( 'THEMEURI' ) )
 	define( 'THEMEURI', get_template_directory_uri( __FILE__ ) );
 
 
-//require_once( THEMEPATH . '/theme-abstract.php' );
-
 /**
  * Class to init the WordPress theme
  *
