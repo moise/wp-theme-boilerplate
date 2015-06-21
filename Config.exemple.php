@@ -21,7 +21,7 @@ $conf = [
 			'dependencies' => [ 'jquery' ],
 			'version'      => '3.3.4',
 			'footer'       => true
-		]
+		],
 		'main'      => [
 			'url'          => 'main.min.js',
 			'dependencies' => [ 'jquery' ],
