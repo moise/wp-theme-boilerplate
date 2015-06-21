@@ -3,5 +3,4 @@ Kenzol is a WordPress theme boilerplate that includes some useful modules such a
 
 To start just include the Autoloader.php file in your function.php file.
 
-Kenzol also need a configuration file useful to add all your styles, javascripts and any other theme feature.
-
+Kenzol also need a configuration file useful to add all your styles, javascripts and any other theme feature. Just rename the Config.exemple.php in Config.php
