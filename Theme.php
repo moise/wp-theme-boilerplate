@@ -1,6 +1,7 @@
 <?php
 
 namespace Kenzol;
+
 use Kenzol\Modules\Breadcrumb;
 use Kenzol\Modules\DynamicCSS;
 use Kenzol\Modules\Menu;
@@ -19,7 +20,7 @@ if ( ! defined( 'THEMEURI' ) )
 /**
  * Class to init the WordPress theme
  *
- * @version: 0.1.2
+ * @version: 0.1.3
  *
  * @package: Theme
  * @author : Moise Scalzo <moise.scalzo@gmail.com>
@@ -96,7 +97,7 @@ class Theme {
 	 * @since : 0.1.0
 	 */
 
-	const VERSION = '0.1.0';
+	const VERSION = '0.1.1';
 
 
 	/**
@@ -137,13 +138,7 @@ class Theme {
 
 
 	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Theme_Menu. Orchestrates the Menus.
-	 * - All the custon file dependencies. Set them on the Theme configuration file.
-	 * - Plugin_Name_Loader. Orchestrates the hooks of the plugin.
+	 * Load the required dependencies for this Theme Class.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -158,7 +153,7 @@ class Theme {
 		$conf = [ ];
 
 		// Required by the class
-		require_once THEMEPATH . '/theme-config.php';
+		require_once THEMEPATH . '/Config.php';
 		$this->conf = $conf;
 
 		//All the custom files
@@ -310,7 +305,7 @@ class Theme {
 	 *
 	 * @param array $templates
 	 * @param array $options
-	 * @return Modules\Theme_Breadcrumb
+	 * @return Modules\Breadcrumb
 	 */
 
 	public function breadcrumb( $templates = array(), $options = array() )
@@ -331,15 +326,21 @@ class Theme {
 
 	public function sidebars()
 	{
-		$sidebars = [ ];
+		if ( isset( $this->conf['sidebars'] ) ) :
 
-		foreach ( $this->conf['sidebars'] as $args ) :
+			$sidebars = [ ];
 
-			$sidebars[] = new Sidebar( $args );
+			foreach ( $this->conf['sidebars'] as $args ) :
 
-		endforeach;
+				$sidebars[] = new Sidebar( $args );
 
-		return $sidebars;
+			endforeach;
+
+			return $sidebars;
+
+		else :
+			return array();
+		endif;
 	}
 
 
