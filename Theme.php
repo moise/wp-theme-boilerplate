@@ -163,8 +163,10 @@ class Theme {
 			foreach ( $this->conf['dependencies'] as $dependency ) {
 				require_once $dependency;
 			}
-
 		}
+
+		if ( is_admin() )
+			$settings = new Breadcrumb_Settings();
 	}
 
 
