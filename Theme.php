@@ -2,10 +2,11 @@
 
 namespace Kenzol;
 
-use Kenzol\Modules\Breadcrumb;
-use Kenzol\Modules\DynamicCSS;
-use Kenzol\Modules\Menu;
-use Kenzol\Modules\Sidebar;
+use Kenzol\Modules\Breadcrumb,
+	Kenzol\Modules\DynamicCSS,
+	Kenzol\Modules\Menu,
+	Kenzol\Modules\Sidebar,
+	Kenzol\Admin\Breadcrumb as Breadcrumb_Settings;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit;
@@ -310,9 +311,9 @@ class Theme {
 	 * @return Modules\Breadcrumb
 	 */
 
-	public function breadcrumb( $templates = array(), $options = array() )
+	public function breadcrumb( $templates = array(), $options = array(), $strings = array(), $autorun = true )
 	{
-		$breadcrumb = new Breadcrumb( $templates, $options );
+		$breadcrumb = new Breadcrumb( $templates = array(), $options = array(), $strings = array(), $autorun = true );
 
 		return $breadcrumb;
 	}
