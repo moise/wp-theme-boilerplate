@@ -398,16 +398,26 @@ class Theme {
 	 *
 	 * @param : $query_name   The query name to be cached
 	 * @param : $args         The args passed to the query
+	 * @param : $force        If the query need to be forced and not taken from cache (transient)
+	 *
 	 * @return: mixed         Return array
 	 */
-
-	public function query( $query_name, $args, $force = false )
+	public function query( $query_name, $args = array(), $force = false )
 	{
-		if ( empty( $this->cache[ $query_name ] ) && ! $force ) {
+		$query = get_transient( $query_name );
+
+		//- If query is cached (not emtpy) and force is false return it.
+		if ( ! empty( $query ) && ! $force )
+			return $query;
+
+		//- Else if launch the query and cache it
+		else if ( empty( $query ) && ! $force ) {
 			$this->cache[ $query_name ] = new \WP_Query( $args );
 			set_transient( $query_name, $this->cache[ $query_name ], 2 * HOUR_IN_SECONDS );
-		} else {
-			return $this->cache[ $query_name ] = new \WP_Query( $args );
+
+		//- Else just lunch the query
+		} else if ( $force ) {
+			return new \WP_Query( $args );
 		}
 
 		return get_transient( $query_name );
