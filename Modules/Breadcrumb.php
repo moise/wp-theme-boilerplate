@@ -77,13 +77,13 @@ class Breadcrumb {
 			'show_htfpt'     => false // show hierarchical terms for post types
 		) );
 		$this->strings   = wp_parse_args( $strings, array(
-			'home'      => 'Startseite',
+			'home'      => 'Home',
 			'search'    => array(
-				'singular' => 'Ein Suchergebnis zu <em>%s</em>',
-				'plural'   => '%s Suchergebnisse zu <em>%s</em>'
+				'singular' => '1 risultato per <em>%s</em>',
+				'plural'   => '%s risultati per <em>%s</em>'
 			),
-			'paged'     => 'Seite %d',
-			'404_error' => 'Fehler: Seite existiert nicht'
+			'paged'     => 'Pagina %d',
+			'404_error' => 'Errore: pagina non trovata'
 		) );
 
 		// Generate breadcrumb
