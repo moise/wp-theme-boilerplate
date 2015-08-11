@@ -421,5 +421,52 @@ class Theme {
 
 		return get_transient( $query_name );
 	}
+	
+		public function __set( $name, $args )
+	{
+		$this->$name( $args );
+	}
+
+
+	private function image_size( array $args )
+	{
+		add_image_size( $args['name'], $args['width'], $args['height'], $args['crop'] );
+	}
+
+
+	/**
+	 * Gets the excerpt of a specific post ID or object
+	 *
+	 * @param        $post   - object/int - the ID or object of the post to get the excerpt of
+	 * @param int    $length - int - the length of the excerpt in words
+	 * @param string $tags   - string - the allowed HTML tags. These will not be stripped out
+	 * @param string $extra  - string - text to append to the end of the excerpt
+	 *
+	 * @return bool|mixed|void
+	 */
+	function excerpt_by_id( $post, $length = 10, $tags = '<a><em><strong>', $extra = '[...]' )
+	{
+		if ( is_int( $post ) ) {
+			// get the post object of the passed ID
+			$post = get_post( $post );
+		} elseif ( ! is_object( $post ) ) {
+			return false;
+		}
+		if ( has_excerpt( $post->ID ) ) {
+			$the_excerpt = $post->post_excerpt;
+
+			return apply_filters( 'the_content', $the_excerpt );
+		} else {
+			$the_excerpt = $post->post_content;
+		}
+		$the_excerpt   = strip_shortcodes( strip_tags( $the_excerpt ), $tags );
+		$the_excerpt   = preg_split( '/\b/', $the_excerpt, $length * 2 + 1 );
+		$excerpt_waste = array_pop( $the_excerpt );
+		$the_excerpt   = implode( $the_excerpt );
+		$the_excerpt .= $extra;
+
+		return apply_filters( 'the_content', $the_excerpt );
+	}
+
 
 }
